@@ -61,7 +61,16 @@ import {
     let contract = MarketplaceContract.bind(Address.fromString(MARKETPLACE_ADDRESS));
   
     let result = contract.try_getMarketplaceListing(listingIndex);
-    let resultValue3 = result.value.toMap().get("value3").toBigInt();
+    let resultValue3 = result.value.toMap().get("value3")?.toBigInt();
   
     return resultValue3 ? resultValue3 : ZERO_BI;
+  }
+
+  export function fetchBotTokenAddress(listingIndex: BigInt): Address {
+    let contract = MarketplaceContract.bind(Address.fromString(MARKETPLACE_ADDRESS));
+  
+    let result = contract.try_getMarketplaceListing(listingIndex);
+    let resultValue3 = result.value.toMap().get("value2")?.toAddress();
+  
+    return resultValue3 ? resultValue3 : Address.fromHexString(ADDRESS_ZERO);
   }
